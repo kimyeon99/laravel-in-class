@@ -14,16 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/hi', function () {
-    return view('hello');
-});
+Route::resource('/posts', PostsController::class)->middleware(['auth']);
 
-Route::get('/layouts', function () {
-    return view('layouts.app');
-});
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
-Route::resource('/posts', PostsController::class);
+require __DIR__ . '/auth.php';

@@ -1,10 +1,13 @@
 <div>
     <!-- Happiness is not something readymade. It comes from your own actions. - Dalai Lama -->
+    
     @foreach ($posts as $post)
         <div class="my-2">
+            <p>{{ $post->title }}</p>
             <p>{{ $post->content }}</p>
         </div>
     @endforeach
+
 </div>
 
 {{-- blade와 클래스 --}}
