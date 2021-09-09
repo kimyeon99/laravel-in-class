@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
 {
@@ -27,7 +28,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
+        return view('bbs.create');
     }
 
     /**
@@ -38,7 +39,13 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+            'content' => 'required'
+        ]);
+        $input = array_merge($request->all(), ["user_id" => Auth::user()->id]);
+        Post::create($input);
+        return redirect()->route('posts.index', ['posts' => Post::all()]);
     }
 
     /**

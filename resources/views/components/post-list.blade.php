@@ -1,12 +1,22 @@
-<div>
+<div class="m-4 p-4">
     <!-- Happiness is not something readymade. It comes from your own actions. - Dalai Lama -->
-    
-    @foreach ($posts as $post)
-        <div class="my-2">
-            <p>{{ $post->title }}</p>
-            <p>{{ $post->content }}</p>
-        </div>
-    @endforeach
+    <table class="table table-hover" >
+        <thead>
+        <tr>
+            <th scope="col">제목</th>
+            <th scope="col">작성자</th>
+            <th scope="col">작성일</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($posts as $post)
+        <tr>
+              <td> {{ $post->title }}</td>
+              <td> {{ $post->user->name }}</td>
+              <td> {{ $post->created_at->diffForHumans() }}</td>
+        </tr>
+        @endforeach
+    </tbody>
 
 </div>
 
