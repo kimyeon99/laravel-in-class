@@ -15,7 +15,8 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        //  $posts = Post::orderBy('created_at', 'desc')->get();
+        $posts = Post::latest()->paginate(10);
         // dd($posts);
 
         return view('bbs/index', ['posts' => $posts]);
@@ -41,9 +42,26 @@ class PostsController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'content' => 'required'
+            'content' => 'required',
+            'image' => 'image',
         ]);
+
+        $fileName = null;
+
+        if ($request->hasFile('image')) {
+            $fileName = $request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs(
+                'public/images',
+                $fileName
+            );
+        }
+        // strpos, strrpos
         $input = array_merge($request->all(), ["user_id" => Auth::user()->id]);
+
+        if ($fileName) {
+            $input = array_merge($input, ['image' => $fileName]);
+        }
+
         Post::create($input);
         return redirect()->route('posts.index', ['posts' => Post::all()]);
     }
