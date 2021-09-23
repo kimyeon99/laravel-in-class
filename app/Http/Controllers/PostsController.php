@@ -86,7 +86,7 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('bbs/edit', ['post' => Post::find($id)]);
     }
 
     /**
@@ -98,7 +98,19 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+            'content' => 'required',
+            'image' => 'image',
+        ]);
+
+        $post = Post::find($id);
+        $post->title = $request->title;
+        $post->content = $request->content;
+
+        // 새로운 이미지 파일이 있을 경우 원래 이미지 파일 삭제하고 추가하기 할 차례
+
+        return redirect()->back();
     }
 
     /**
@@ -109,6 +121,8 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Post::find($id)->delete();
+
+        return redirect()->route('posts.index');
     }
 }

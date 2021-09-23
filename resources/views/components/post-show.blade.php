@@ -14,8 +14,25 @@
       <li class="list-group-item">수정일: {{ $post->updated_at }} ({{ $post->updated_at->diffForHumans() }})</li>
     </ul>
     <div class="card-body">
-      <a href="#" class="card-link">수정하기</a>
-      <a href="#" class="card-link">삭제하기</a>
+      <a href="{{ route('posts.edit', ['post' => $post->id]) }}" class="card-link">수정하기</a>
+    
+      <form id = "form" onsubmit="event.preventDefault(); confirmDelete(event)" action = "{{ route('posts.destroy', ['post' => $post->id]) }}" method="post">
+      @csrf
+      @method('delete')
+      <button>삭제하기</button>
+      </form>
     </div>
   </div>
+
+  <script>
+    function confirmDelete(e){
+      myform = document.getElementById('form');
+      flag = confirm('삭제 하시겠습니까?');
+
+      if(flag){
+        myform.submit();
+      }
+      
+    }
+  </script>
 </div>
