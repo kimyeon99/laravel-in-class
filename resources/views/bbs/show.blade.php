@@ -10,5 +10,4 @@
 
     <x-post-show :post="$post"/>
     
-    
 </x-app-layout>

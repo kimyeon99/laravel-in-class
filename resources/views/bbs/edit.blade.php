@@ -35,6 +35,10 @@
         @if($post->image)
         <img src="{{ '/storage/images/' . $post->image }}" class="w-20 h-20 rounded-full" alt="..." style="width: 80% margin: 0px auto;">
         @endif
+        <form action = "{{ 'posts/images/$post->id' }}" method="post">
+          @method('delete')
+        <button id="editForm" class="btn btn-danger h-8 my-1" onclick="return deleteImage()">X</button>
+        </form>
         <div class="col-12">
             <label for="image" class="form-label mt-3">Title</label>
             <input type="file" class="form-control" id="image" name="image" >
@@ -45,7 +49,14 @@
             <button type="submit" class="btn btn-primary">Sign in</button>
           </div>
     </form>
-
+    <script>
+      function deleteImage(){
+        editForm = document.getElementById('editForm');
+        editForm._method.value = 'deleteImage';
+        editForm.action = '/posts/images/{{ $post->id }}'
+        return editForm.submit();
+      }
+    </script>
     
     </div>
     

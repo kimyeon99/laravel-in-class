@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use PDO;
 
 class PostsController extends Controller
 {
@@ -49,9 +51,9 @@ class PostsController extends Controller
         $fileName = null;
 
         if ($request->hasFile('image')) {
-            $fileName = $request->file('image')->getClientOriginalName();
+            $fileName = time() . '_' . $request->file('image')->getClientOriginalName();
             $request->file('image')->storeAs(
-                'public/images',
+                'public/images/',
                 $fileName
             );
         }
@@ -108,9 +110,21 @@ class PostsController extends Controller
         $post->title = $request->title;
         $post->content = $request->content;
 
+
+        if ($request->image) {
+            $fileName = time() . '_' . $request->file('image')->getClientOriginalName();
+            if ($post->image) {
+                Storage::delete('public/images/' . $post->image);
+            }
+            $request->image->storeAs(
+                'public/images/',
+                $fileName
+            );
+        }
+
         // 새로운 이미지 파일이 있을 경우 원래 이미지 파일 삭제하고 추가하기 할 차례
 
-        return redirect()->back();
+        return redirect()->route('posts.show', ['post' => $post->id]);
     }
 
     /**
@@ -121,8 +135,21 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        Post::find($id)->delete();
+        $post = Post::find($id);
+        if ($post->image) {
+            Storage::delete('public/images/' . $post->image);
+        }
+        $post->delete();
 
         return redirect()->route('posts.index');
+    }
+
+    public function deleteImage($id)
+    {
+        $post = Post::find($id);
+        Storage::delete('public/images/' . $post->image);
+        $post->image = null;
+        $post->image->save();
+        return redirect()->route('posts.edit', ['post' => $id]);
     }
 }
