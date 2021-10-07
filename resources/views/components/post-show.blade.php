@@ -6,6 +6,9 @@
     
     <div class="card-body">
       <h5 class="card-title">{{ $post->title }}</h5>
+      <form action="{{ route('like.store', ['post' => $post->id]) }}" method="post">
+      <button name="btn">안녕</button>
+      </form>
       <p class="card-text">{!! $post->content !!}</p>
     </div>
     <ul class="list-group list-group-flush">
@@ -15,8 +18,9 @@
     </ul>
     <div class="card-body">
       <a href="{{ route('posts.edit', ['post' => $post->id]) }}" class="card-link">수정하기</a>
-    
+      <like-button></like-button>
       <form id = "form" onsubmit="event.preventDefault(); confirmDelete(event)" action = "{{ route('posts.destroy', ['post' => $post->id]) }}" method="post">
+        
       @csrf
       @method('delete')
       <button>삭제하기</button>
