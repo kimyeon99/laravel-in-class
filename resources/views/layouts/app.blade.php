@@ -32,5 +32,17 @@
                 {{ $slot }}
             </main>
         </div>
+
+        <script>
+            function confirmDelete(e){
+              myform = document.getElementById('form');
+              flag = confirm('삭제 하시겠습니까?');
+                
+              if(flag){
+                myform.submit();
+              }
+              
+            }
+          </script>
     </body>
 </html>

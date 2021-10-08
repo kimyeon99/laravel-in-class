@@ -27,8 +27,10 @@ class Post extends Model
         */
     }
 
+    // 글의 좋아요 수
     public function likes()
     {
+        //N:M은 many로 표현한다.
         return $this->belongsToMany(User::class);
     }
 }

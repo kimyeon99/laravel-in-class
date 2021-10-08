@@ -18,6 +18,7 @@ class PostsController extends Controller
     public function index()
     {
         //  $posts = Post::orderBy('created_at', 'desc')->get();
+        // 모델에 있는 likes를 post 객체에 담는다.(함수 호출 안 해도 됨)
         $posts = Post::latest()->paginate(10);
         // dd($posts);
 
@@ -76,7 +77,7 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id);
+        $post = Post::with('likes')->find($id);
         return view('bbs.show', ['post' => $post]);
     }
 

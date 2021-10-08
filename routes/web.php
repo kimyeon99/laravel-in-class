@@ -18,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::resource('/posts', PostsController::class)->middleware(['auth']);
 Route::delete('/posts/images/{id}', [PostsController::class, 'deleteImage'])->middleware(['auth']);
 
-Route::post('/like/{post}', [LikesController::class, "store"])->middleware(['auth'])->name('like.store');
+Route::post('/likes/{post}', [LikesController::class, "store"])->middleware(['auth'])->name('likes.store');
+
 
 Route::get('/', function () {
     return view('dashboard');
