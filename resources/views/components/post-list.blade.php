@@ -6,6 +6,7 @@
             <th scope="col">제목</th>
             <th scope="col">작성자</th>
             <th scope="col">작성일</th>
+            <th scope="col">좋아요</th>
         </tr>
     </thead>
     <tbody>
@@ -14,6 +15,8 @@
               <td><a href="{{ route('posts.show', ['post' => $post->id]) }}"> {{ $post->title }} </a></td>
               <td> {{ $post->user->name }}</td>
               <td> {{ $post->created_at->diffForHumans() }}</td>
+              <td> {{ count($post->likes) }}</td>
+              <!-- <td> {{ $post->likes->count() }}</td> -->
         </tr>
         @endforeach
 

@@ -8,10 +8,24 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
+// alpine.js (반응형 메뉴)
+import Alpine from 'alpinejs';
+import { vue } from 'laravel-mix';
+window.Alpine = Alpine;
+Alpine.start();
+
+// sweetalert2
+const Swal = require('sweetalert2')
+// import Swal from 'sweetalert2'
+
+
+
+
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
+ * components and automatically register them with their "basename"
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
@@ -21,6 +35,7 @@ window.Vue = require('vue').default;
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('like-button', require('./components/LikeButton.vue').default);
+//vue.component('comment-list', require('./components/CommentList.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

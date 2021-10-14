@@ -66,7 +66,7 @@ class PostsController extends Controller
         }
 
         Post::create($input);
-        return redirect()->route('posts.index', ['posts' => Post::all()]);
+        return redirect()->route('posts.index', ['posts' => Post::all()])->with('success', 'true');
     }
 
     /**

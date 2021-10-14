@@ -41,7 +41,8 @@ export default {
     data() {
         return {
             like: false,
-            userIdArray: []
+            userIdArray: [],
+            count:0,
         };
     },
     methods: {
@@ -65,6 +66,7 @@ export default {
             like = true,
             그렇지 않으면 like = false
             */
+            
             this.like = this.userIdArray.includes(this.loginuser);
         }
     },
