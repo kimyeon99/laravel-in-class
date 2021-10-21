@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\PostsController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,10 @@ Route::delete('/posts/images/{id}', [PostsController::class, 'deleteImage'])->mi
 
 Route::post('/likes/{post}', [LikesController::class, "store"])->middleware(['auth'])->name('likes.store');
 
+Route::get('/posts/{post}/comments', [CommentsController::class, "index"]);
+Route::post('/posts/{post}/comments', [CommentsController::class, "store"]);
+Route::put('/posts//comments/{com_id}', [CommentsController::class, "update"]);
+Route::delete('/posts/comments/{com_id}', [CommentsController::class, "destroy"]);
 
 Route::get('/', function () {
     return view('dashboard');

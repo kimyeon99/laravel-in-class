@@ -33,4 +33,9 @@ class Post extends Model
         //N:M은 many로 표현한다.
         return $this->belongsToMany(User::class);
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

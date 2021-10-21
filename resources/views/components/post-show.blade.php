@@ -3,10 +3,9 @@
     @if($post->image)
         <img src="{{ '/storage/images/' . $post->image }}" class="card-img-top" alt="..." style="width: 80% margin: 0px auto;">
     @endif
-    
+    <p>좋아요 수: {{ count($post->likes) }}</p>
     <div class="card-body">
       <h5 class="card-title">{{ $post->title }}</h5>
-      {{ count($post->likes) }}
       <p class="card-text">{!! $post->content !!}</p>
     </div>
     <ul class="list-group list-group-flush">
@@ -32,7 +31,8 @@
     </div>
   </div>
 
-  {{-- <div class="card mt-2 mb-5" style="width: 70%; margin:5px auto">
+  <div class="card mt-2 mb-5" style="width: 70%; margin:5px auto">
     <comment-list :post="{{ $post }}" :loginuser="{{ Auth::user()->id }}"/>
-  </div> --}}
+    
+  </div>
 </div>
