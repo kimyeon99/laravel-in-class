@@ -13,5 +13,12 @@ class Comment extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+        // return $this->belongsTo(X::class, 'user_id', 'id', users)
+        /*
+            SELECT *
+            FROM USERS
+            WHERE id = $this.user_id
+
+        */
     }
 }

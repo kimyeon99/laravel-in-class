@@ -8,13 +8,13 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentsController extends Controller
 {
-    public function index($post)
+    public function index($post_id)
     {
         /*
             select * from comments where post_id = ?
             order by created_at desc;
         */
-        $comments = Comment::where('post_id', $post)->latest();
+        $comments = Comment::where('post_id', $post_id)->latest()->get();
         return $comments;
     }
 
@@ -27,22 +27,25 @@ class CommentsController extends Controller
 
     */
 
-    public function store(Request $request, $post)
+    public function store(Request $request, $post_id)
     {
+        //라우터파라미터: web.php에서 주소창에 매개변수로 준 것
+        $request->validate(['comment' => 'require']);
         $comment = new Comment;
-        $comment->commnet = $request->comment;
+        $comment->comment = $request->comment;
         $comment->user_id = Auth::user()->id;
-        $comment->post_id = $post;
+        $comment->post_id = $post_id;
 
         $comment->save();
 
         return $comment;
     }
 
-    public function update(Request $request, $post)
+    public function update(Request $request, $com_id)
     {
-        $comment = Comment::where('post_id', $post);
+        $comment = Comment::find($com_id);
         $comment->comment = $request->comment;
+        // update comments set comment=?, updated_at=now() where id = ?
 
         return $comment;
     }
