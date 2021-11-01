@@ -36,6 +36,7 @@
         <img src="{{ '/storage/images/' . $post->image }}" class="w-20 h-20 rounded-full" alt="..." style="width: 80% margin: 0px auto;">
         @endif
         <form action = "{{ 'posts/images/$post->id' }}" method="post">
+          @csrf
           @method('delete')
         <button id="editForm" class="btn btn-danger h-8 my-1" onclick="return deleteImage()">X</button>
         </form>

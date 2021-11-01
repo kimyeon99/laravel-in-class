@@ -1,12 +1,13 @@
 <template>
     <div>
-        <button class="btn btn-default" @click="getComments">
+        <button class="btn btn-default w-full" @click="getComments">
             댓글 불러오기
             <comment-item
                 v-for="(comment, index) in comments"
                 :key="index"
                 :comment="comment"
             />
+            댓글 리스트
         </button>
     </div>
 </template>
@@ -23,16 +24,21 @@ export default {
     },
     methods: {
         getComments() {
-            this.comments = [
-                "1st comment",
-                "2nd comment",
-                "3rd comment",
+            //this.comments = [
+                // "1st comment",
+                // "2nd comment",
+                // "3rd comment",
 
-                // 서버에 현재 게시글의 댓글 리스트를 비동기적으로 요청
-                // 즉, axios를 이용해서 요청
-                // 서버가 댓글 리스트를 주면 그놈을 어디에 할당해?
-                // this.comments에 할당.
-            ];
+                // // 서버에 현재 게시글의 댓글 리스트를 비동기적으로 요청
+                // // 즉, axios를 이용해서 요청
+                // // 서버가 댓글 리스트를 주면 그놈을 어디에 할당해?
+                // // this.comments에 할당.
+                axios.get('/posts/' + this.post.id + '/comments/')
+                .then(response=>{
+                    this.comments = response.data;
+                }).catch(error=>{
+                    console.log(error);
+                })
         }
     }
 };

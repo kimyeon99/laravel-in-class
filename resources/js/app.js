@@ -36,7 +36,7 @@
  
  Vue.component("comment-list", require("./components/CommentList.vue").default);
 
- Vue.component("comment-item", require("./components/CommentItem.vue").default);
+ // Vue.component("comment-item", require("./components/CommentItem.vue").default);
 
  
  /**

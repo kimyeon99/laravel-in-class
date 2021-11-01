@@ -14,7 +14,7 @@ class CommentsController extends Controller
             select * from comments where post_id = ?
             order by created_at desc;
         */
-        $comments = Comment::where('post_id', $post_id)->latest()->get();
+        $comments = Comment::with('user')->where('post_id', $post_id)->latest()->get();
         return $comments;
     }
 
@@ -53,5 +53,11 @@ class CommentsController extends Controller
     public function destroy($id)
     {
         return Comment::find($id)->delete();
+
+        /*
+        $comment = Comment::find($id)->latest()->get();
+        $comment->delete();
+        return $comment
+        */
     }
 }
