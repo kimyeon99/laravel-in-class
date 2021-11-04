@@ -1,28 +1,63 @@
 <template>
     <div>
+        <label class="block text-left p-2">
+            <button @click="addComment" class="text-gray-700 ">
+                댓글등록
+            </button>
+            <textarea
+                v-model="newComment"
+                class="form-textarea mt-1 block w-full"
+                rows="3"
+                placeholder="Enter some long form content."
+            ></textarea>
+        </label>
         <button class="btn btn-default w-full" @click="getComments">
             댓글 불러오기
             <comment-item
-                v-for="(comment, index) in comments"
+                v-for="(comment, index) in comments.data"
                 :key="index"
-                :comment="comment"
-            />
-            댓글 리스트
+                :comment="comment"/>
+
         </button>
+            <pagination @pageClicked="getPage($event)" v-if="comments.data != null" :links="comments.links" />
+        
     </div>
 </template>
 
 <script>
 import CommentItem from "./CommentItem.vue";
+import Pagination from "./pagination.vue";
 export default {
     props: ["post", "loginuserid"],
-    components: { CommentItem },
+    components: { CommentItem, Pagination },
     data() {
         return {
-            comments: []
+            comments: [],
+            newComment:""
         };
     },
     methods: {
+        addComment(){
+            if(this.newComment == ''){
+                alert('한 글자라도 쓰세요.');
+                return;
+            }
+           axios.post('/posts/' + this.post.id + '/comments/', {'comment': this.newComment})
+            .then(response=>{
+                console.log(response.data);
+                this.getComments();
+                this.newComment='';
+            })
+            .catch(error=>{console.log(error)})
+        },
+        getPage(url){
+        axios.get(url)
+                .then(response=>{
+                    this.comments = response.data;
+                }).catch(error=>{
+                    console.log(error);
+                })},
+
         getComments() {
             //this.comments = [
                 // "1st comment",
