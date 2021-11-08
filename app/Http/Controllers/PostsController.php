@@ -87,8 +87,14 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        // 의존성 주입 DI(Depency Injection)
+        $post = Post::find($id);
+        //dd($request->user());
+        if ($request->user()->cannot('update', $post)) {
+            abort(403);
+        }
         return view('bbs/edit', ['post' => Post::find($id)]);
     }
 
