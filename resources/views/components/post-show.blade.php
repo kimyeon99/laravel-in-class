@@ -14,19 +14,25 @@
       <li class="list-group-item">등록일: {{ $post->created_at }} ({{ $post->created_at->diffForHumans() }})</li>
       <li class="list-group-item">수정일: {{ $post->updated_at }} ({{ $post->updated_at->diffForHumans() }})</li>
     </ul>
-    <div class="card-body">
-      <a href="{{ route('posts.edit', ['post' => $post->id]) }}" class="card-link">수정하기</a>
 
-      <!-- 좋아요 버튼 -->
+    <!-- 좋아요 버튼 -->
       <div>
         <like-button :post="{{ $post }}" :loginuser="{{ Auth::user()->id }}"></like-button>
       </div>
 
-      <form id = "form" onsubmit="event.preventDefault(); confirmDelete(event)" action = "{{ route('posts.destroy', ['post' => $post->id]) }}" method="post">
-        
+
+    
+    <div class="card-body">
+      @can('update', $post)
+      <a href="{{ route('posts.edit', ['post' => $post->id]) }}" class="card-link">수정하기</a>
+      @endcan
+      
+      <form id = "form" onsubmit="event.preventDefault(); confirmDelete(event)" action = "{{ route('posts.destroy', ['post' => $post->id]) }}" method="post">  
       @csrf
-      @method('delete')
-      <button>삭제하기</button>
+      @can('delete', $post)
+        @method('delete')
+          <button>삭제하기</button>
+      @endcan
       </form>
     </div>
   </div>

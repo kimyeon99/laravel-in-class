@@ -18,6 +18,12 @@
                         <span class="text-xs text-gray-400">3:34 PM</span>
                         <p class="text-sm"> {{ comment.comment }}  </p>
                         
+
+                    </div>
+
+                    <div v-if="comment.id == loginuserid">
+                        <p>수정하기</p>
+                        <p>삭제하기</p>
                     </div>
                 </div>
                     </div>

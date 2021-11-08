@@ -16,7 +16,8 @@
             <comment-item
                 v-for="(comment, index) in comments.data"
                 :key="index"
-                :comment="comment"/>
+                :comment="comment"
+                :loginuserid="loginuserid"/>
 
         </button>
             <pagination @pageClicked="getPage($event)" v-if="comments.data != null" :links="comments.links" />

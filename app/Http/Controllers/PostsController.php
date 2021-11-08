@@ -91,10 +91,12 @@ class PostsController extends Controller
     {
         // 의존성 주입 DI(Depency Injection)
         $post = Post::find($id);
-        //dd($request->user());
+        //PostPolicy
         if ($request->user()->cannot('update', $post)) {
             abort(403);
         }
+        //$this->authorize('update', $post);
+
         return view('bbs/edit', ['post' => Post::find($id)]);
     }
 
@@ -114,6 +116,9 @@ class PostsController extends Controller
         ]);
 
         $post = Post::find($id);
+        //PostPolicy
+        $this->authorize('update', $post);
+
         $post->title = $request->title;
         $post->content = $request->content;
 
@@ -143,6 +148,9 @@ class PostsController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
+        //PostPolicy
+        $this->authorize('delete', $post);
+
         if ($post->image) {
             Storage::delete('public/images/' . $post->image);
         }
@@ -154,6 +162,9 @@ class PostsController extends Controller
     public function deleteImage($id)
     {
         $post = Post::find($id);
+        //PostPolicy
+        $this->authorize('delete', $post);
+
         Storage::delete('public/images/' . $post->image);
         $post->image = null;
         $post->image->save();
